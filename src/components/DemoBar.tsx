@@ -1,16 +1,17 @@
 // ============================================================================
 // Persistent Top Demo Control Bar — view switcher, network toggle, reset.
 // ============================================================================
-import { Smartphone, Monitor, Columns, RotateCcw, Wifi, WifiOff, Truck } from 'lucide-react';
+import { Smartphone, Monitor, Columns, RotateCcw, Wifi, WifiOff, Truck, Home } from 'lucide-react';
 import type { ViewMode } from '../types';
 import { useStore } from '../store';
 
 interface Props {
   view: ViewMode;
   setView: (v: ViewMode) => void;
+  onHome?: () => void;
 }
 
-export default function DemoBar({ view, setView }: Props) {
+export default function DemoBar({ view, setView, onHome }: Props) {
   const { network, setNetwork, resetDemo, queuedCount } = useStore();
   const offline = network === 'offline';
 
@@ -32,7 +33,11 @@ export default function DemoBar({ view, setView }: Props) {
     <header className="no-print sticky top-0 z-40 border-b border-rig-border bg-rig-panel/95 backdrop-blur">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2.5 sm:px-4">
         {/* Brand */}
-        <div className="flex items-center gap-2 pr-2">
+        <button
+          onClick={onHome}
+          className="flex items-center gap-2 pr-2 text-left transition hover:opacity-80"
+          title="Back to home"
+        >
           <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-amber-500 text-slate-900">
             <Truck size={20} />
           </div>
@@ -44,7 +49,17 @@ export default function DemoBar({ view, setView }: Props) {
               Oilfield Field Ticketing
             </div>
           </div>
-        </div>
+        </button>
+
+        {onHome && (
+          <button
+            onClick={onHome}
+            className="flex items-center gap-1.5 rounded-lg border border-rig-border bg-rig-bg px-2.5 py-2 text-xs font-semibold text-slate-300 hover:bg-rig-card"
+            title="Back to landing page"
+          >
+            <Home size={14} /> <span className="hidden sm:inline">Home</span>
+          </button>
+        )}
 
         {/* View switcher */}
         <div className="flex items-center gap-1 rounded-xl border border-rig-border bg-rig-bg p-1">

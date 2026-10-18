@@ -10,12 +10,12 @@ import DriverApp from './components/DriverApp';
 import OfficePortal from './components/OfficePortal';
 import { Toasts, SyncOverlay } from './components/Toasts';
 
-export default function App() {
+export default function App({ onHome }: { onHome?: () => void }) {
   const [view, setView] = useState<ViewMode>('split');
   return (
     <StoreProvider>
       <div className="flex min-h-screen flex-col bg-rig-bg text-slate-200">
-        <DemoBar view={view} setView={setView} />
+        <DemoBar view={view} setView={setView} onHome={onHome} />
         <main className="min-h-0 flex-1 overflow-hidden">
           {view === 'driver' && <DriverStage />}
           {view === 'office' && <OfficePortal />}
