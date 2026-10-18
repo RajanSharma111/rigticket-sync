@@ -20,6 +20,9 @@ import {
   Fuel,
   Signal,
   TrendingUp,
+  Mail,
+  Copy,
+  Check,
 } from 'lucide-react';
 
 export default function Landing({ onLaunch }: { onLaunch: () => void }) {
@@ -36,6 +39,7 @@ export default function Landing({ onLaunch }: { onLaunch: () => void }) {
         <Features />
         <HowItWorks />
         <FinalCta onLaunch={onLaunch} />
+        <Contact />
         <Footer />
       </div>
     </div>
@@ -94,13 +98,21 @@ function NavBar({ onLaunch }: { onLaunch: () => void }) {
           <div className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Oilfield Field Ticketing</div>
         </div>
       </div>
-      <button
-        onClick={onLaunch}
-        className="group flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2.5 text-sm font-bold text-slate-900 shadow-lg shadow-amber-500/20 transition hover:bg-amber-400"
-      >
-        Launch Live Demo
-        <ArrowRight size={16} className="transition group-hover:translate-x-0.5" />
-      </button>
+      <div className="flex items-center gap-2">
+        <a
+          href="#contact"
+          className="hidden items-center gap-1.5 rounded-xl border border-rig-border bg-rig-bg px-4 py-2.5 text-sm font-semibold text-slate-300 transition hover:bg-rig-card sm:flex"
+        >
+          <Mail size={15} /> Contact
+        </a>
+        <button
+          onClick={onLaunch}
+          className="group flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2.5 text-sm font-bold text-slate-900 shadow-lg shadow-amber-500/20 transition hover:bg-amber-400"
+        >
+          Launch Live Demo
+          <ArrowRight size={16} className="transition group-hover:translate-x-0.5" />
+        </button>
+      </div>
     </nav>
   );
 }
@@ -613,6 +625,62 @@ function FinalCta({ onLaunch }: { onLaunch: () => void }) {
           <ArrowRight size={20} className="transition group-hover:translate-x-1" />
         </button>
         <div className="relative mt-4 text-xs text-slate-400">No sign-up · Seed data pre-loaded · Resets anytime</div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Contact — displays the email directly (no form → spam-proof, no backend).   */
+function Contact() {
+  const email = 'rajansharmagndu111@gmail.com';
+  const subject = 'RigTicket Sync — Demo Inquiry';
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard blocked — the mailto link still works */
+    }
+  };
+
+  return (
+    <section id="contact" className="mx-auto max-w-4xl px-5 py-16">
+      <div className="rounded-3xl border border-rig-border bg-rig-card/60 p-8 text-center backdrop-blur sm:p-12">
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-amber-500/15 text-amber-400">
+          <Mail size={26} />
+        </div>
+        <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-slate-50">Contact Us</h2>
+        <p className="mx-auto mt-3 max-w-lg text-slate-400">
+          Want a walkthrough, pricing for your fleet, or a pilot on your own tickets?
+          Reach out directly — we reply fast.
+        </p>
+
+        {/* Email pill */}
+        <div className="mx-auto mt-7 flex max-w-md flex-col items-stretch gap-2 sm:flex-row">
+          <a
+            href={`mailto:${email}?subject=${encodeURIComponent(subject)}`}
+            className="group flex flex-1 items-center justify-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-5 py-3.5 font-mono text-sm font-bold text-amber-300 transition hover:bg-amber-500/20"
+          >
+            <Mail size={16} />
+            {email}
+          </a>
+          <button
+            onClick={copy}
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-rig-border bg-rig-bg px-4 py-3.5 text-sm font-semibold text-slate-300 transition hover:bg-rig-panel"
+            title="Copy email address"
+          >
+            {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+            {copied ? 'Copied' : 'Copy'}
+          </button>
+        </div>
+
+        <p className="mt-4 text-xs text-slate-500">
+          Prefer email over a form — no spam, straight to our inbox.
+        </p>
       </div>
     </section>
   );
