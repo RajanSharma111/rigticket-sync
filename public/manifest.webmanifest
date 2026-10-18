@@ -1,0 +1,17 @@
+{
+  "name": "RigTicket Sync",
+  "short_name": "RigTicket",
+  "description": "Offline-first oilfield field ticketing & QuickBooks invoicing bridge.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#0b1120",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
